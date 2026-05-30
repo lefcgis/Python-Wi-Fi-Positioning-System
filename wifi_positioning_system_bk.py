@@ -99,7 +99,7 @@ class WifiScanner:
         """Scan Wi-Fi networks on Windows using pywifi."""
         try:
             wifi = pywifi.PyWiFi()
-            iface = wifi.interfaces()[0]  # Use the first available Wi-Fi interface
+            iface = wifi.interfaces()[0]
             iface.scan()
             results = iface.scan_results()
 
@@ -190,12 +190,31 @@ class GeolocationAPI:
                 logger.error("Check that your API key is valid and that you have not exceeded the request limit.")
             elif "timeout" in str(e).lower():
                 logger.error("Request timed out. Check your internet connection.")
-            return None
+            exit(1)
 
     def _get_location_mozilla(self, wifi_data):
-        """Use Mozilla Location Service API (deprecated, but kept for compatibility)."""
-        logger.warning("Mozilla Location Service is no longer available. Using demo data instead.")
-        return None
+        """Use Mozilla Location Service API."""
+        url = "https://location.services.mozilla.com/v1/geolocate"
+        mls_request = {
+            "data": {
+                "wifi": [
+                    {"macAddress": mac, "signalStrength": signal}
+                    for mac, signal in wifi_data
+                ]
+            }
+        }
+
+        try:
+            response = requests.post(url, json=mls_request, timeout=10)
+            response.raise_for_status()
+            result = response.json()
+            if result is None:
+                logger.error("Mozilla API returned no data. Check your request format.")
+                return None
+            return result
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Error connecting to Mozilla API: {e}")
+            return None
 
 
 class MapGenerator:
@@ -314,7 +333,7 @@ Contact: initbrain@gmail.com, luis.eduardo.ferrer.cruz@gmail.com'''
                         help='enable verbose messages',
                         default=False)
     parser.add_argument('-k', '--api-key', action="store", dest="api_key",
-                        help='Google Maps Geolocation API key (required for Google provider)',
+                        help='Google Maps Geolocation API key (could be hardcoded)',
                         default=None)
     parser.add_argument('-p', '--json-prettify', action="store_true",
                         help='prettify JSON output',
@@ -330,12 +349,12 @@ Contact: initbrain@gmail.com, luis.eduardo.ferrer.cruz@gmail.com'''
 
     # Windows mode
     if sys.platform == 'win32':
-        parser.add_argument('--demo', action="store_true", help='demo mode - uses sample data', default=False)
+        parser.add_argument('--demo', action="store_true", help='demo mode - West Norwood (London)', default=False)
     else:
         required_parser = parser.add_argument_group('required arguments')
         required_parser = required_parser.add_mutually_exclusive_group(required=True)
         required_parser.add_argument('-i', action="store", dest="wifi_interface", help='specify Wi-Fi scan interface')
-        required_parser.add_argument('--demo', action="store_true", help='demo mode - uses sample data', default=False)
+        required_parser.add_argument('--demo', action="store_true", help='demo mode - West Norwood (London)', default=False)
 
     return parser.parse_args()
 
@@ -349,23 +368,29 @@ def main():
         global API_KEY
         API_KEY = args.api_key
 
-    # Demo mode: use sample data without calling any API
+    # Solo validar la clave API si el proveedor es Google
+    if args.api_provider == 'google' and (not API_KEY or API_KEY == 'YOUR_KEY'):
+        logger.error("A Google Maps Geolocation API key is required. Get yours at: https://developers.google.com/maps/documentation/geolocation/intro")
+        exit(1)
+
+    # Demo mode
     if args.demo:
         logger.info("Using demo mode with sample data")
-        # Simulate a valid API result for demo mode
-        api_result = {
-            "location": {
-                "lat": -12.0464,  # Lima, Perú
-                "lng": -77.0428
-            },
-            "accuracy": 50.0
-        }
+        try:
+            with open('demo_data.json', 'r') as f:
+                demo_data = json.load(f)
+            wifi_data = [(ap['macAddress'], ap['signalStrength']) for ap in demo_data['wifiAccessPoints']]
+        except FileNotFoundError:
+            logger.warning("demo_data.json not found. Using default demo data.")
+            wifi_data = [
+                ('00-1f-f4-25-ee-30', -40),
+                ('02-fe-f4-25-ee-30', -44),
+                ('12-fe-f4-25-ee-30', -44),
+                ('00-26-5a-7e-0d-02', -60),
+                ('90-01-3b-30-04-29', -60),
+                ('2c-b0-5d-bd-db-4a', -50)
+            ]
     else:
-        # Only validate API key if using Google provider
-        if args.api_provider == 'google' and (not API_KEY or API_KEY == 'YOUR_KEY'):
-            logger.error("A Google Maps Geolocation API key is required. Get yours at: https://developers.google.com/maps/documentation/geolocation/intro")
-            exit(1)
-
         # Determine OS type
         if sys.platform == 'win32':
             os_type = 'windows'
@@ -383,13 +408,9 @@ def main():
         scanner = WifiScanner(interface=args.wifi_interface if hasattr(args, 'wifi_interface') else None, os_type=os_type)
         wifi_data = scanner.scan()
 
-        # Get location using the selected API provider
-        geolocation = GeolocationAPI(api_key=API_KEY, provider=args.api_provider)
-        api_result = geolocation.get_location(wifi_data)
-
-        if api_result is None:
-            logger.error("No geolocation data was returned. Check your API provider and connection.")
-            exit(1)
+    # Get location using the selected API provider
+    geolocation = GeolocationAPI(api_key=API_KEY, provider=args.api_provider)
+    api_result = geolocation.get_location(wifi_data)
 
     # Print results
     if api_result is not None:
@@ -404,7 +425,7 @@ def main():
         if 'location' in api_result:
             logger.info(f"Google Maps link: https://www.google.com/maps?q={api_result['location']['lat']},{api_result['location']['lng']}")
     else:
-        logger.error("No geolocation data was returned. Check your API provider and connection.")
+         logger.error("No geolocation data was returned. Check your API provider and connection.")
 
 
 if __name__ == "__main__":

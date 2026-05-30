@@ -1,0 +1,12 @@
+{
+    "wifiAccessPoints": [
+        {"macAddress": "00-11-22-33-44-55", "signalStrength": -40},
+        {"macAddress": "AA-BB-CC-DD-EE-FF", "signalStrength": -50},
+        {"macAddress": "11-22-33-44-55-66", "signalStrength": -60},
+        {"macAddress": "FF-EE-DD-CC-BB-AA", "signalStrength": -70},
+        {"macAddress": "00-1f-f4-25-ee-30", "signalStrength": -44},
+        {"macAddress": "02-fe-f4-25-ee-30", "signalStrength": -48},
+        {"macAddress": "00-26-5a-7e-0d-02", "signalStrength": -65},
+        {"macAddress": "90-01-3b-30-04-29", "signalStrength": -75}
+    ]
+}

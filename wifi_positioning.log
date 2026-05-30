@@ -1,0 +1,30 @@
+2026-05-29 06:53:35,625 - INFO - Using demo mode with sample data
+2026-05-29 06:53:36,091 - ERROR - Error connecting to Google API: 404 Client Error: Not Found for url: https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyAnI5VB259eZcnQiqKj__GbiwDNG8WEHZk
+2026-05-29 07:12:08,514 - INFO - Using demo mode with sample data
+2026-05-29 07:12:09,131 - ERROR - Error connecting to Google API: 404 Client Error: Not Found for url: https://geolocation.googleapis.com/v1/geolocate?key=AIzaSyAnI5VB259eZcnQiqKj__GbiwDNG8WEHZk
+2026-05-29 16:02:31,491 - ERROR - A Google Maps Geolocation API key is required. Get yours at: https://developers.google.com/maps/documentation/geolocation/intro
+2026-05-29 22:58:48,325 - INFO - Using demo mode with sample data
+2026-05-29 22:58:48,758 - ERROR - Error connecting to Mozilla API: 404 Client Error: Not Found for url: https://location.services.mozilla.com/v1/geolocate?key=test
+2026-05-29 22:58:48,761 - INFO - Geolocation result:
+2026-05-29 22:59:28,769 - INFO - Using demo mode with sample data
+2026-05-29 22:59:29,189 - ERROR - Error connecting to Mozilla API: 404 Client Error: Not Found for url: https://location.services.mozilla.com/v1/geolocate?key=test
+2026-05-29 22:59:29,190 - INFO - Geolocation result:
+2026-05-29 23:01:22,805 - INFO - Using demo mode with sample data
+2026-05-29 23:01:23,296 - ERROR - Error connecting to Mozilla API: 404 Client Error: Not Found for url: https://location.services.mozilla.com/v1/geolocate?key=test
+2026-05-29 23:01:23,296 - INFO - Geolocation result:
+2026-05-29 23:09:24,010 - INFO - Using demo mode with sample data
+2026-05-29 23:09:24,415 - ERROR - Error connecting to Mozilla API: 404 Client Error: Not Found for url: https://location.services.mozilla.com/v1/geolocate
+2026-05-29 23:09:24,417 - ERROR - No geolocation data was returned. Check your API provider and connection.
+2026-05-29 23:13:31,950 - INFO - Using demo mode with sample data
+2026-05-29 23:13:32,559 - ERROR - Error connecting to Google API: 404 Client Error: Not Found for url: https://geolocation.googleapis.com/v1/geolocate?key=AIzaSyAnI5VB259eZcnQiqKj__GbiwDNG8WEHZk
+2026-05-29 23:19:24,445 - INFO - Using demo mode with sample data
+2026-05-29 23:19:25,055 - ERROR - Error connecting to Google API: 404 Client Error: Not Found for url: https://geolocation.googleapis.com/v1/geolocate?key=AIzaSyAnI5VB259eZcnQiqKj__GbiwDNG8WEHZk
+2026-05-29 23:21:20,852 - INFO - Using demo mode with sample data
+2026-05-29 23:21:21,446 - ERROR - Error connecting to Google API: 404 Client Error: Not Found for url: https://geolocation.googleapis.com/v1/geolocate?key=AIzaSyAnI5VB259eZcnQiqKj__GbiwDNG8WEHZk
+2026-05-29 23:22:21,289 - ERROR - A Google Maps Geolocation API key is required. Get yours at: https://developers.google.com/maps/documentation/geolocation/intro
+2026-05-29 23:27:37,704 - INFO - Using demo mode with sample data
+2026-05-29 23:27:37,705 - INFO - Geolocation result:
+2026-05-29 23:27:37,705 - INFO - Google Maps link: https://www.google.com/maps?q=-12.0464,-77.0428
+2026-05-29 23:29:43,910 - INFO - Using demo mode with sample data
+2026-05-29 23:29:43,911 - INFO - Geolocation result:
+2026-05-29 23:29:43,911 - INFO - Google Maps link: https://www.google.com/maps?q=-12.0464,-77.0428
