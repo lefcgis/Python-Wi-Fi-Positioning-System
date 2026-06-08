@@ -6,7 +6,7 @@ Python Wi-Fi Positioning System - Wi-Fi geolocation script using the Google Maps
 @author:     Julien Deudon, Luis Eduardo Ferrer Cruz
 @copyright:  Copyright 2017-2026, Julien Deudon, Luis Eduardo Ferrer Cruz
 @license:    GNU GPL 3.0
-@contact:    initbrain@gmail.com, luis.eduardo.ferrer.cruz@gmail.com
+@contact:    initbrain@gmail.com, luis.ferrer.c@uni.pe
 """
 
 import argparse
@@ -312,7 +312,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Contact: initbrain@gmail.com, luis.eduardo.ferrer.cruz@gmail.com'''
+Contact: initbrain@gmail.com, luis.ferrer.c@uni.pe'''
 
     parser = MyParser(
         description=program_license,
